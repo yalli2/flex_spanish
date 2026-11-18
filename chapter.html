@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>FLEX 스페인어 학습실</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<div id="app"></div>
+<script src="assets/tts.js"></script>
+<script src="assets/app.js"></script>
+<script src="data/chapters.js"></script>
+<script>
+(function(){
+  var id = new URLSearchParams(location.search).get('c') || 'guide';
+  if(!CHAPTERS.some(function(c){return c.id===id;})){ location.replace('index.html'); return; }
+  var s = document.createElement('script');
+  s.src = 'data/' + id + '.js';
+  s.onload = function(){ renderChapter(CH[id]); };
+  s.onerror = function(){ document.getElementById('app').innerHTML =
+    '<div class="wrap"><div class="panel"><h3>준비 중입니다</h3><p class="note">이 과의 자료를 불러오지 못했습니다.</p><a class="btn" href="index.html">메인으로</a></div></div>'; };
+  document.body.appendChild(s);
+})();
+</script>
+</body>
+</html>
